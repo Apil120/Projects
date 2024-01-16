@@ -35,7 +35,7 @@ vectorstore = Pinecone.from_documents(documents, embeddings, index_name=index_na
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 2})
 
 # Initialize the OpenAI language model
-openai_model = ChatOpenAI()
+openai_model = ChatOpenAI(api_key="sk-..YourAPI")
 
 # Create the conversational retrieval chain
 qa = ConversationalRetrievalChain.from_llm(openai_model, retriever)
