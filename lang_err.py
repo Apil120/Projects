@@ -9,9 +9,9 @@ from langchain.document_loaders import DirectoryLoader
 from langchain.llms import OpenAI
 import pinecone
 
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = "sk-...yourAPI"
 
-pdf_loader = DirectoryLoader('D:/OneDrive/Desktop/NextAI Bootcamp/LANGCHAIN', glob="**/*.pdf")
+pdf_loader = DirectoryLoader('path to your file contains the PDFs', glob="**/*.pdf")
 loaders = [pdf_loader]
 
 documents = []
@@ -25,7 +25,7 @@ documents = text_splitter.split_documents(documents)
 embeddings = OpenAIEmbeddings()
 
 # Initializing Pinecone with the correct API key and environment
-pinecone.init(api_key='a2adbe22-72be-489d-85c6-829885b99845', environment='gcp-starter')
+pinecone.init(api_key='PineconeAPI', environment='PineconeENV')
 index_name = "chatbot-application"
 
 # Create vector store using Pinecone
@@ -35,7 +35,7 @@ vectorstore = Pinecone.from_documents(documents, embeddings, index_name=index_na
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 2})
 
 # Initialize the OpenAI language model
-openai_model = ChatOpenAI(api_key="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")
+openai_model = ChatOpenAI()
 
 # Create the conversational retrieval chain
 qa = ConversationalRetrievalChain.from_llm(openai_model, retriever)
